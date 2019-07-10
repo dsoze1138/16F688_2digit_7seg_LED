@@ -1,0 +1,52 @@
+Application Requirements:
+Using a 2-digit LED module design a circuit and implement code that does the following:
+
+When the circuit is first energized, the seven-segment LEDs will start counting at 0x00.  
+
+The dual segment LEDs will count up to 0xFF, increasing by 1 each time. The count MUST BE sequential. It is unacceptable to count 0 to F to 0 on digit 2, then increase digit 1 by 1. The count shall perform like a counter (0x00 to 0x0F then 0x10 etc.). The count will be continuous from 0x00 to 0xFF.  
+
+Once the count reaches 0xFF, the count will start over at 0x00.
+
+
+Circuit design:
+Controller: P/N PIC16F688
+LED module: P/N 08TIE524
+Digit drive transistor: P/N 2N6519 (PNP)
+
+Connect PIC16F688 pin 2, RA5 to resistor to LED module pins 16,11 segments a1, a2
+Connect PIC16F688 pin 5, RC5 to resistor to LED module pins 15,10 segments b1, b2
+Connect PIC16F688 pin 6, RC4 to resistor to LED module pins  3, 8 segments c1, c2
+Connect PIC16F688 pin 7, RC3 to resistor to LED module pins  2, 6 segments d1, d2
+Connect PIC16F688 pin 8, RC2 to resistor to LED module pins  1, 5 segments e1, 32
+Connect PIC16F688 pin 9, RC1 to resistor to LED module pins 18,12 segments f1, f2
+Connect PIC16F688 pin 10,RC0 to resistor to LED module pins 17, 7 segments g1, g2
+Connect PIC16F688 pin 12 RA1 to resistor to transistor to LED module pin 14 CA1
+Connect PIC16F688 pin 13 RA0 to resistor to transistor to LED module pin 13 CA2
+
+LED module CA1 drives left (Most Significant Digit)
+LED module CA2 drives tight (Least Significant Digit)
+LED module DP1 and DP2 are not used
+
+
+Coding design:
+
+Execution begings at power on reset vector
+
+Initialize controller system oscillator
+Initialize contoller GPIO pins
+Initialize global data
+
+The 2-digit LED display will be multiplexed.
+Digit 1 will be driven first.
+Digit 2 will be driven next.
+Then start again from digit 1.
+Each digit will be on for at most 17 milliseconds.
+
+The value to be displayed will be an 8-bit count from 0x00 to 0xFF.
+This value updates at one count per second, interval is approximate. 
+This means it is not an exact one second tick.
+The count value will roll overflow from 0xFF to 0x00.
+
+The display and count update need to execute concurrently.
+No blocking function implementations should be used.
+Consider use of TIMER interrupt to implement multiplexed digit refresh.
