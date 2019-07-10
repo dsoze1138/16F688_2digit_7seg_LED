@@ -47,6 +47,7 @@ This value updates at one count per second, interval is approximate.
 This means it is not an exact one second tick.
 The count value will roll overflow from 0xFF to 0x00.
 
+The display and count update function run forever.
 The display and count update need to execute concurrently.
 No blocking function implementations should be used.
 Consider use of TIMER interrupt to implement multiplexed digit refresh.
