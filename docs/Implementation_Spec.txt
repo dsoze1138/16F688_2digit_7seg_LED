@@ -24,7 +24,7 @@ Connect PIC16F688 pin 12 RA1 to resistor to transistor to LED module pin 14 CA1
 Connect PIC16F688 pin 13 RA0 to resistor to transistor to LED module pin 13 CA2
 
 LED module CA1 drives left (Most Significant Digit)
-LED module CA2 drives tight (Least Significant Digit)
+LED module CA2 drives right (Least Significant Digit)
 LED module DP1 and DP2 are not used
 
 
